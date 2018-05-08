@@ -18,6 +18,6 @@
 
 static int perf_fds[MAX_PERF_DESCRIPTORS];
 
-int get_perf_descriptor(int marker);
-int perf_descriptor_start(int marker);
-int perf_descriptor_stop(int marker);
+extern int get_perf_descriptor(int marker);
+extern int perf_descriptor_start(int marker);
+extern int perf_descriptor_stop(int marker);
