@@ -16,7 +16,7 @@
 
 #define PERF_MARKER_TEST        0
 
-static int perf_fds[MAX_PERF_DESCRIPTORS];
+static int perf_fds[MAX_PERF_DESCRIPTORS] = { -1 };
 
 extern int get_perf_descriptor(int marker);
 extern int perf_descriptor_start(int marker);

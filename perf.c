@@ -45,6 +45,10 @@ int perf_descriptor_start(int marker) {
 
   fd = perf_fds[marker];
 
+  if(fd == -1) {
+    fd = get_perf_descriptor(marker);
+  }
+
   ret = ioctl(fd, PERF_EVENT_IOC_RESET, 0);
   perf_assert(ret >= 0);
 
