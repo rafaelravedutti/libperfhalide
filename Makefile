@@ -11,5 +11,11 @@ perfhalide.o: perf.c
 libperfhalide.so: perfhalide.o
 	${CC} -shared -fPIC $^ -lc -o $@
 
+install:
+	cp -p libperfhalide.so /usr/lib
+
+test: test.c libperfhalide.so
+	${CC} $^ -L. -lperfhalide -o $@
+
 clean:
-	rm -f libperfhalide.so *.o
+	rm -f libperfhalide.so *.o test
