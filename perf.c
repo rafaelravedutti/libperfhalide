@@ -5,6 +5,7 @@
 #include <sys/ioctl.h>
 #include <linux/perf_event.h>
 #include <asm/unistd.h>
+#include <papi.h>
 //---
 #include "perf.h"
 
@@ -41,6 +42,29 @@ int get_perf_descriptor(int marker) {
 }
 
 int perf_descriptor_start(int marker) {
+  float real_time, proc_time, mflops;
+  long long flpops;
+  int ret;
+
+  if((ret = PAPI_flops(&real_time, &proc_time, &flpops, &mflops)) < PAPI_OK) {
+    fprintf(stderr, "Failed to initialize PAPI_flops (%d)\n", ret);
+  }
+}
+
+int perf_descriptor_stop(int marker) {
+  float real_time, proc_time, mflops;
+  long long flpops;
+  int ret;
+
+  if((ret = PAPI_flops(&real_time, &proc_time, &flpops, &mflops)) < PAPI_OK) {
+    fprintf(stderr, "Failed to use PAPI_flops (%d)\n", ret);
+  } else {
+    PERF_PRINT("Real time: %f, Proc time: %f, Total flpops: %lld, MFLOPS: %f\n", real_time, proc_time, flpops, mflops);
+  } 
+}
+
+/*
+int perf_descriptor_start(int marker) {
   int fd, ret;
 
   fd = perf_fds[marker];
@@ -76,3 +100,5 @@ int perf_descriptor_stop(int marker) {
   close(fd);
   return 0;
 }
+*/
+
